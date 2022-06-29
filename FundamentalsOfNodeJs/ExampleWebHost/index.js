@@ -31,5 +31,5 @@ const server = http.createServer((req, res) => {
 const port = 3000;
 
 server.listen(port, () => {
-    console.log(`Sunucu port ${port} de başlatıldı.`);
+    console.log(`Sunucu port ${port} de başlatildi.`);
 })
