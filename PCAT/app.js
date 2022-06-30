@@ -1,15 +1,33 @@
 const express = require('express');
+const path = require('path')
+const ejs = require('ejs');
 
 const app = express();
 
-app.get('/', (req, res) => {
-  const photo = {
-    id:1,
-    name:'Photo Name',
-    description:'Photo Description'
-  }
+// Middlewares
 
-  res.send(photo);
+// const myLogger = (req,res,next) => {
+//   console.log('Logged')
+//   next()
+// }
+
+app.use(express.static('public'))
+// app.use(myLogger)
+
+// Template Engines
+app.set("view engine", "ejs");
+
+// Routing
+app.get('/', (req, res) => {
+  res.render('index')
+});
+
+app.get('/about', (req, res) => {
+  res.render('about')
+});
+
+app.get('/add', (req, res) => {
+  res.render('add')
 });
 
 const port = 3000;
