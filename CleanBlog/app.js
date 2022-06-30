@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const moment = require('moment')
 
 const path = require('path')
 
@@ -17,9 +18,14 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/',async(req,res)=>{
 
-    const posts = await Post.find()
+    let posts = await Post.find()
 
-    'asdasd'.substring(0,30)
+    posts = posts.map(post => {
+        return {
+            ...post._doc , 
+            dateCreated : moment(post._doc.dateCreated).format('DD/MM/YYYY')
+        }
+    })
 
     res.render('index',{
         posts:posts
