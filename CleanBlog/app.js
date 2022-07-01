@@ -1,10 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const moment = require('moment');
+const methodOverride = require('method-override')
 
-const path = require('path');
-
-const Post = require('./models/Post');
+const postController = require('./controllers/postController');
+const pageController = require('./controllers/pageController');
 
 mongoose.connect('mongodb://localhost:27017/cleanblog-db');
 
@@ -15,46 +14,25 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method',{
+  methods:['GET','POST']
+}))
 
-app.get('/', async (req, res) => {
-  let posts = await Post.find();
+// PostController
 
-  posts = posts.map((post) => {
-    return {
-      ...post._doc,
-      dateCreated: moment(post._doc.dateCreated).format('DD/MM/YYYY'),
-    };
-  });
+app.get('/', postController.getPosts);
+app.post('/posts', postController.createPost);
+app.put('/posts/:id', postController.updatePostByID);
+app.delete('/posts/:id', postController.deletePostByID);
+app.get('/posts/:id', postController.getPostByID);
 
-  res.render('index', {
-    posts: posts,
-  });
-});
 
-app.get('/about', (req, res) => {
-  res.render('about');
-});
+// PageController
 
-app.get('/add_post', (req, res) => {
-  res.render('add_post');
-});
+app.get('/posts/edit/:id',pageController.getEditPostPage)
+app.get('/about', pageController.getAboutPage);
+app.get('/add_post', pageController.getAddPostPage);
 
-app.post('/posts', async (req, res) => {
-  await Post.create(req.body);
-  res.redirect('/');
-});
-
-app.get('/posts/:id', async (req, res) => {
-  const post = await Post.findById(req.params.id);
-
-  res.render('post', {
-    post: {
-      ...post._doc,
-      dateCreated: moment(post._doc.dateCreated).format('DD/MM/YYYY'),
-    },
-  });
-  
-});
 
 const port = 4001;
 app.listen(port, () => {
