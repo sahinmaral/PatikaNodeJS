@@ -71,10 +71,11 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
                   <div class="position-relative tm-thumbnail-container">
                     <img
-                      src="img/tn-01.jpg"
+                      src="<%= photos[i].image %>"
                       alt="Image"
                       class="img-fluid tm-catalog-item-img"
                     />
+                    <a href="/photos/<%= photos[i]._id %>" class="position-absolute tm-img-overlay">
                     </a>
                   </div>
                   <div class="p-4 tm-bg-gray tm-catalog-item-description">
@@ -111,24 +112,14 @@
               </ul>
             </div>
           </main>
-
-          <!-- Subscribe form and footer links -->
-          <%- include('partials/_footer') -%>
-          <!-- row -->
-
-          <footer class="row pt-5">
-            <div class="col-12">
-              <p class="text-right">
-                Copyright 2020 The Video Catalog Company - Designed by
-                <a href="https://templatemo.com" rel="nofollow" target="_parent"
-                  >TemplateMo</a
-                >
-              </p>
-            </div>
-          </footer>
         </div>
         <!-- tm-content-container -->
       </div>
+
+      <div class="container-fluid tm-content-container mx-auto pt-4">
+        <%- include('partials/_footer') -%>
+      </div>
+      
     </div>
     <!-- .tm-page-wrap -->
 
