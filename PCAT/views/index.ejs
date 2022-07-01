@@ -94,21 +94,33 @@
             <!-- Catalog Paging Buttons -->
             <div>
               <ul class="nav tm-paging-links">
-                <li class="nav-item active">
-                  <a href="#" class="nav-link tm-paging-link">1</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link tm-paging-link">2</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link tm-paging-link">3</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link tm-paging-link">4</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link tm-paging-link">></a>
-                </li>
+                <% if(pagesCount > 0) { %>
+
+                  <% if(currentPage !== 1){ %>
+                    <li class="nav-item">
+                      <a href="/?page=<%= currentPage-1 %>" class="nav-link tm-paging-link">←</a>
+                    </li>
+                  <% } %>
+
+                  <% for(let i = 0; i < pagesCount; i++){ %>
+                    <% if(currentPage === i+1){ %>
+                      <li class="nav-item active">
+                        <a href="/?page=<%= i+1 %>" class="nav-link tm-paging-link"><%= i+1 %></a>
+                      </li>
+                    <% } else { %>
+                      <li class="nav-item">
+                        <a href="/?page=<%= i+1 %>" class="nav-link tm-paging-link"><%= i+1 %></a>
+                      </li>
+                      <% } %>
+                  <% } %>
+
+                  <% if(currentPage !== pagesCount){ %>
+                    <li class="nav-item">
+                      <a href="/?page=<%= currentPage+1 %>" class="nav-link tm-paging-link">→</a>
+                    </li>
+                  <% } %>
+
+                <% } %>
               </ul>
             </div>
           </main>

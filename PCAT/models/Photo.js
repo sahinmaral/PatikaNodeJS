@@ -7,8 +7,8 @@ const PhotoSchema = new Schema({
   image: String,
   dateCreated: {
     type: Date,
-    default: Date.now(),
-  },
+    default: Date.now()
+  }
 });
 
 const Photo = mongoose.model('photos',PhotoSchema)
