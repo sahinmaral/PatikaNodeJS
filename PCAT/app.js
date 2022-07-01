@@ -1,20 +1,23 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
+require('dotenv').config();
 
 var methodOverride = require('method-override');
 
 const path = require('path');
 const ejs = require('ejs');
 
-
 const photoController = require('./controllers/photoController');
 const pageController = require('./controllers/pageController');
 
-mongoose.connect('mongodb://localhost:27017/pcat-db', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.modzxda.mongodb.net/?retryWrites=true&w=majority`,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 const app = express();
 
@@ -43,7 +46,7 @@ app.get('/about', pageController.getAboutPage);
 app.get('/add', pageController.getAddPhotoPage);
 app.get('/photos/edit/:id', pageController.getEditPhotoPage);
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`App is listening on : ${port}`);
 });
