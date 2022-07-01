@@ -5,7 +5,15 @@ const Post = require('../models/Post');
 
 
 exports.getPosts = async (req, res) => {
-  let posts = await Post.find();
+
+  const page = req.query.page || 1
+  const postsPerPage = 3
+
+  const totalPosts = await Post.find().countDocuments()
+  
+  let posts = await Post.find()
+  .skip((page-1) * postsPerPage)
+  .limit(postsPerPage)
 
   posts = posts.map((post) => {
     return {
@@ -16,6 +24,8 @@ exports.getPosts = async (req, res) => {
 
   res.render('index', {
     posts: posts,
+    currentPage : page / 1,
+    pagesCount : Math.ceil(totalPosts / postsPerPage)
   });
 };
 

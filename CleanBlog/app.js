@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override')
+require('dotenv').config();
 
 const postController = require('./controllers/postController');
 const pageController = require('./controllers/pageController');
 
-mongoose.connect('mongodb://localhost:27017/cleanblog-db');
+mongoose.connect(`mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.qfzu5za.mongodb.net/cleanblog-db?retryWrites=true&w=majority`);
 
 const app = express();
 
@@ -34,7 +35,7 @@ app.get('/about', pageController.getAboutPage);
 app.get('/add_post', pageController.getAddPostPage);
 
 
-const port = 4001;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`App is listening on : ${port}`);
 });
