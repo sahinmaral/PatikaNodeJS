@@ -12,7 +12,7 @@ const photoController = require('./controllers/photoController');
 const pageController = require('./controllers/pageController');
 
 mongoose.connect(
-  `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.modzxda.mongodb.net/?retryWrites=true&w=majority`,
+  `mongodb+srv://${process.env.MONGODB_ATLAS_USERNAME}:${process.env.MONGODB_ATLAS_PASSWORD}@cluster0.modzxda.mongodb.net/pcat-db?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
